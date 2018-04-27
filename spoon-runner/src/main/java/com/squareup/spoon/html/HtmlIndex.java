@@ -1,11 +1,9 @@
 package com.squareup.spoon.html;
 
 import com.android.ddmlib.testrunner.IRemoteAndroidTestRunner;
-import com.squareup.spoon.DeviceDetails;
-import com.squareup.spoon.DeviceResult;
-import com.squareup.spoon.DeviceTest;
-import com.squareup.spoon.DeviceTestResult;
-import com.squareup.spoon.SpoonSummary;
+import com.squareup.spoon.*;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -94,7 +92,7 @@ final class HtmlIndex {
       this.executionFailed = executionFailed;
     }
 
-    @Override public int compareTo(Device other) {
+    @Override public int compareTo(@NotNull Device other) {
       if (name == null && other.name == null) {
         return serial.compareTo(other.serial);
       }
@@ -137,7 +135,7 @@ final class HtmlIndex {
       this.status = status;
     }
 
-    @Override public int compareTo(TestResult other) {
+    @Override public int compareTo(@NotNull TestResult other) {
       return 0;
     }
   }
