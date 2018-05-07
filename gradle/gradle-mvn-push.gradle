@@ -25,22 +25,24 @@ def isReleaseBuild() {
 }
 
 def getReleaseRepositoryUrl() {
-  return hasProperty('RELEASE_REPOSITORY_URL') ? RELEASE_REPOSITORY_URL
-      : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+  return hasProperty('RELEASE_REPOSITORY_URL') ?
+          RELEASE_REPOSITORY_URL + "/" + POM_ARTIFACT_ID + "/" + VERSION_NAME : ""
 }
 
 def getSnapshotRepositoryUrl() {
-  return hasProperty('SNAPSHOT_REPOSITORY_URL') ? SNAPSHOT_REPOSITORY_URL
-      : "https://oss.sonatype.org/content/repositories/snapshots/"
+  return project.properties['SNAPSHOT_REPOSITORY_URL'] ?: System.getenv('SNAPSHOT_REPOSITORY_URL')
 }
 
 def getRepositoryUsername() {
-  return hasProperty('SONATYPE_NEXUS_USERNAME') ? SONATYPE_NEXUS_USERNAME : ""
+  return project.properties['BINTRAY_USERNAME'] ?: System.getenv('BINTRAY_USERNAME')
 }
 
-def getRepositoryPassword() {
-  return hasProperty('SONATYPE_NEXUS_PASSWORD') ? SONATYPE_NEXUS_PASSWORD : ""
+def getRepositoryKey() {
+  return project.properties['BINTRAY_API_KEY'] ?: System.getenv('BINTRAY_API_KEY')
 }
+
+// remove unnecessary artifacts
+configurations.archives.artifacts.removeAll { it.type == 'tar' || it.type == 'zip' }
 
 afterEvaluate { project ->
   uploadArchives {
@@ -53,10 +55,11 @@ afterEvaluate { project ->
         pom.version = VERSION_NAME
 
         repository(url: getReleaseRepositoryUrl()) {
-          authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
+          authentication(userName: getRepositoryUsername(), password: getRepositoryKey())
         }
+
         snapshotRepository(url: getSnapshotRepositoryUrl()) {
-          authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
+          authentication(userName: getRepositoryUsername(), password: getRepositoryKey())
         }
 
         pom.project {
