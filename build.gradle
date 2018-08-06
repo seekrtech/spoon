@@ -5,29 +5,28 @@ buildscript {
       'buildTools': '27.0.3',
 
       'supportLibrary': '27.0.2',
-      'kotlin': '1.2.10',
-      'errorProne': '2.0.19',
+      'kotlin': '1.2.60',
+      'errorProne': '2.3.1',
   ]
 
   ext.deps = [
-      'gson': 'com.google.code.gson:gson:2.8.0',
-      'argparser': 'com.xenomachina:kotlin-argparser:2.0.0',
-      'commonsLang3': 'org.apache.commons:commons-lang3:3.3.1',
-      'commonsIo': 'commons-io:commons-io:2.5',
-      'ddmlib': 'com.android.tools.ddms:ddmlib:26.0.1',
-      'animatedGifLib': 'com.madgag:animated-gif-lib:1.2',
-      'guava': 'com.google.guava:guava:21.0',
-      'lesscss': 'org.lesscss:lesscss:1.3.3',
-      'mustache': 'com.github.spullara.mustache.java:compiler:0.8.14',
-      'jacocoMavenPlugin': 'org.jacoco:jacoco-maven-plugin:0.7.6.201602180812',
+      'gson': 'com.google.code.gson:gson:2.8.5',
+      'argparser': 'com.xenomachina:kotlin-argparser:2.0.2',
+      'commonsLang3': 'org.apache.commons:commons-lang3:3.7',
+      'commonsIo': 'commons-io:commons-io:2.6',
+      'ddmlib': 'com.android.tools.ddms:ddmlib:26.1.3',
+      'animatedGifLib': 'com.madgag:animated-gif-lib:1.4',
+      'lesscss': 'org.lesscss:lesscss:1.7.0.1.1',
+      'mustache': 'com.github.spullara.mustache.java:compiler:0.9.5',
+      'jacocoMavenPlugin': 'org.jacoco:jacoco-maven-plugin:0.7.8',
       'butterknife': [
-          'runtime': 'com.jakewharton:butterknife:8.5.1',
-          'compiler': 'com.jakewharton:butterknife-compiler:8.5.1'
+          'runtime': 'com.jakewharton:butterknife:8.8.1',
+          'compiler': 'com.jakewharton:butterknife-compiler:8.8.1'
       ],
       'kotlinStdLibJre8': "org.jetbrains.kotlin:kotlin-stdlib-jre8:${versions.kotlin}",
 
       'junit': 'junit:junit:4.12',
-      'truth': 'com.google.truth:truth:0.31',
+      'truth': 'com.google.truth:truth:0.42',
 
       'support': [
           'annotations': "com.android.support:support-annotations:${versions.supportLibrary}",
@@ -46,8 +45,8 @@ buildscript {
 
   dependencies {
     classpath 'com.android.tools.build:gradle:3.0.1'
-    classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
-    classpath 'net.ltgt.gradle:gradle-errorprone-plugin:0.0.10'
+    classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+    classpath 'net.ltgt.gradle:gradle-errorprone-plugin:0.0.11'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
   }
 
