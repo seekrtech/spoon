@@ -1,6 +1,7 @@
 package com.squareup.spoon;
 
 import com.android.ddmlib.AndroidDebugBridge;
+import com.android.ddmlib.DdmPreferences;
 import com.android.ddmlib.testrunner.IRemoteAndroidTestRunner;
 import com.android.ddmlib.testrunner.ITestRunListener;
 import com.google.common.collect.ImmutableMap;
@@ -115,6 +116,7 @@ public final class SpoonRunner {
             "Could not find other APK: " + otherApk));
     checkArgument(testApk.exists(), "Could not find test APK: " + testApk);
 
+    DdmPreferences.setTimeOut((int) adbTimeout.toMillis());
     AndroidDebugBridge adb = SpoonUtils.initAdb(androidSdk, adbTimeout);
 
     try {

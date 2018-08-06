@@ -2,7 +2,6 @@ package com.squareup.spoon;
 
 import com.android.ddmlib.AndroidDebugBridge;
 import com.android.ddmlib.CollectingOutputReceiver;
-import com.android.ddmlib.DdmPreferences;
 import com.android.ddmlib.IDevice;
 import com.android.ddmlib.InstallException;
 import com.android.ddmlib.logcat.LogCatMessage;
@@ -157,8 +156,6 @@ public final class SpoonDeviceRunner {
     final DeviceDetails deviceDetails = DeviceDetails.createForDevice(device);
     result.setDeviceDetails(deviceDetails);
     logDebug(debug, "[%s] setDeviceDetails %s", serial, deviceDetails);
-
-    DdmPreferences.setTimeOut((int) adbTimeout.toMillis());
 
     // Now install the main application and the instrumentation application.
     for (File otherApk : otherApks) {
