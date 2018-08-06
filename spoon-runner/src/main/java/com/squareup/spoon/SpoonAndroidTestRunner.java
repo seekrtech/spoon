@@ -29,12 +29,9 @@ public class SpoonAndroidTestRunner extends RemoteAndroidTestRunner {
   private boolean clearAppDataBeforeEachTest;
   private boolean debug;
 
-  public SpoonAndroidTestRunner(String appPackageName,
-                                String packageName,
-                                String runnerName,
-                                IShellEnabledDevice remoteDevice,
-                                boolean clearAppDataBeforeEachTest,
-                                boolean debug) {
+  public SpoonAndroidTestRunner(String appPackageName, String packageName, String runnerName,
+      IShellEnabledDevice remoteDevice, boolean clearAppDataBeforeEachTest, boolean debug) {
+
     super(packageName, runnerName, remoteDevice);
     this.remoteDevice = remoteDevice;
     this.outputReceiver = new CollectingOutputReceiver();

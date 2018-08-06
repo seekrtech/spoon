@@ -18,7 +18,7 @@ internal class CliArgs(parser: ArgParser) {
   val title by parser.storing("Execution title").default(null)
 
   val instrumentationArgs by parser.option<MutableMap<String, String>>("-e", "--es",
-      help = "Instrumentation runner arguments.", argNames = listOf("KEY", "VALUE")) {
+      help = "Instrumentation runner arguments", argNames = listOf("KEY", "VALUE")) {
     value.orElse { mutableMapOf<String, String>() }
         .apply { put(arguments.first(), arguments.last()) }
   }.addValidator { validateInstrumentationArgs() }.default(null)
@@ -81,7 +81,7 @@ internal class CliArgs(parser: ArgParser) {
       help = "Run each test class in a different instrumentation instance")
 
   val clearAppDataBeforeEachTest by parser.flagging("--clear-app-data",
-      help = "Runs 'adb pm clear app.package.name' to clear app data before each test.")
+      help = "Run 'adb pm clear app.package.name' to clear app data before each test")
 
   private fun validateInstrumentationArgs() {
     val isTestRunPackageLimited = instrumentationArgs?.contains("package") ?: false

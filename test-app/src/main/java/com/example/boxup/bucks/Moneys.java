@@ -1,6 +1,7 @@
 package com.example.boxup.bucks;
 
 import android.support.annotation.MainThread;
+
 import java.text.DecimalFormat;
 
 final class Moneys {

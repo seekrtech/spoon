@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Looper;
 import android.view.View;
+
 import java.util.concurrent.CountDownLatch;
 
 import static android.graphics.Bitmap.Config.ARGB_8888;
