@@ -35,8 +35,8 @@ dependencies {
     exclude group: 'org.apache.maven', module: 'maven-project'
   }
 
-  testCompile deps.junit
-  testCompile deps.truth
+  testImplementation deps.junit
+  testImplementation deps.truth
 }
 
 tasks.getByName('assemble').dependsOn('shadowJar')
