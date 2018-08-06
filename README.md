@@ -22,7 +22,7 @@ Download
 
 Download the [latest runner JAR][1] or the [latest client AAR][2]
 
-Snapshots of the development versions are available in [JFrog's `oss-snapshot-local` repository][snap].
+Snapshots of the development versions are available in JFrog's [oss-snapshot-local][snap] repository.
 
 **Gradle**:
 
@@ -150,6 +150,7 @@ Options:
                                     single file `merged-coverage.ec`.
     --single-instrumentation-call   Run all tests in a single instrumentation call
     --class-level-instrumentation   Run each test class in a different instrumentation instance
+    --clear-app-data                Run 'adb pm clear app.package.name' to clear app data before each test
     --es <KEY> <VALUE>              Arguments to pass to the Instrumentation Runner. This can be used multiple
                                     times for multiple entries.
                                     The supported arguments varies depending on which test runner you are using,
