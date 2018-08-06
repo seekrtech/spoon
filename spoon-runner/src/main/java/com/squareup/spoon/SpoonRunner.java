@@ -65,6 +65,7 @@ public final class SpoonRunner {
   private final boolean grantAll;
   private final boolean singleInstrumentationCall;
   private final boolean classLevelInstrumentation;
+  private final boolean clearAppDataBeforeEachTest;
 
   private SpoonRunner(String title, File androidSdk, File testApk, List<File> otherApks,
       File output, boolean debug, boolean noAnimations, Duration adbTimeout, Set<String> serials,
@@ -72,7 +73,8 @@ public final class SpoonRunner {
       String className, String methodName, IRemoteAndroidTestRunner.TestSize testSize,
       boolean allowNoDevices, List<ITestRunListener> testRunListeners, boolean sequential,
       File initScript, boolean grantAll, boolean terminateAdb, boolean codeCoverage,
-      boolean singleInstrumentationCall, boolean classLevelInstrumentation) {
+      boolean singleInstrumentationCall, boolean classLevelInstrumentation,
+      boolean clearAppDataBeforeEachTest) {
     this.title = title;
     this.androidSdk = androidSdk;
     this.otherApks = otherApks;
@@ -96,6 +98,7 @@ public final class SpoonRunner {
     this.grantAll = grantAll;
     this.singleInstrumentationCall = singleInstrumentationCall;
     this.classLevelInstrumentation = classLevelInstrumentation;
+    this.clearAppDataBeforeEachTest = clearAppDataBeforeEachTest;
 
     if (sequential) {
       this.threadExecutor = Executors.newSingleThreadExecutor();
@@ -295,7 +298,7 @@ public final class SpoonRunner {
     return new SpoonDeviceRunner(testApk, otherApks, output, serial, shardIndex, numShards, debug,
         noAnimations, adbTimeout, testInfo, instrumentationArgs, className, methodName, testSize,
         testRunListeners, codeCoverage, grantAll, singleInstrumentationCall,
-        classLevelInstrumentation);
+        classLevelInstrumentation, clearAppDataBeforeEachTest);
   }
 
   /** Build a test suite for the specified devices and configuration. */
@@ -324,6 +327,7 @@ public final class SpoonRunner {
     private boolean shard = false;
     private boolean singleInstrumentationCall = false;
     private boolean classLevelInstrumentation = false;
+    private boolean clearAppDataBeforeEachTest = false;
 
     /** Identifying title for this execution. */
     public Builder setTitle(String title) {
@@ -470,6 +474,11 @@ public final class SpoonRunner {
       return this;
     }
 
+    public Builder setClearAppDataBeforeEachTest(boolean clearAppDataBeforeEachTest) {
+        this.clearAppDataBeforeEachTest = clearAppDataBeforeEachTest;
+        return this;
+    }
+
     public SpoonRunner build() {
       checkNotNull(androidSdk, "SDK is required.");
       checkArgument(androidSdk.exists(), "SDK path does not exist.");
@@ -483,7 +492,8 @@ public final class SpoonRunner {
       return new SpoonRunner(title, androidSdk, testApk, otherApks, output, debug, noAnimations,
           adbTimeout, serials, skipDevices, shard, instrumentationArgs, className, methodName,
           testSize, allowNoDevices, testRunListeners, sequential, initScript, grantAll,
-          terminateAdb, codeCoverage, singleInstrumentationCall, classLevelInstrumentation);
+          terminateAdb, codeCoverage, singleInstrumentationCall, classLevelInstrumentation,
+          clearAppDataBeforeEachTest);
     }
   }
 

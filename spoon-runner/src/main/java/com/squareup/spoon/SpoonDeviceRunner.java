@@ -79,6 +79,7 @@ public final class SpoonDeviceRunner {
   private final boolean classLevelInstrumentation;
   private final List<ITestRunListener> testRunListeners;
   private final boolean grantAll;
+  private final boolean clearAppDataBeforeEachTest;
 
   /**
    * Create a test runner for a single device.
@@ -100,7 +101,8 @@ public final class SpoonDeviceRunner {
       SpoonInstrumentationInfo instrumentationInfo, Map<String, String> instrumentationArgs,
       String className, String methodName, IRemoteAndroidTestRunner.TestSize testSize,
       List<ITestRunListener> testRunListeners, boolean codeCoverage, boolean grantAll,
-      boolean singleInstrumentationCall, boolean classLevelInstrumentation) {
+      boolean singleInstrumentationCall, boolean classLevelInstrumentation,
+      boolean clearAppDataBeforeEachTest) {
 
     this.testApk = testApk;
     this.otherApks = otherApks;
@@ -111,7 +113,7 @@ public final class SpoonDeviceRunner {
     this.noAnimations = noAnimations;
     this.adbTimeout = adbTimeout;
     this.instrumentationArgs = ImmutableMap.copyOf(instrumentationArgs != null
-            ? instrumentationArgs : Collections.emptyMap());
+        ? instrumentationArgs : Collections.emptyMap());
     this.className = className;
     this.methodName = methodName;
     this.testSize = testSize;
@@ -128,6 +130,7 @@ public final class SpoonDeviceRunner {
     this.coverageDir = FileUtils.getFile(output, COVERAGE_DIR, serial);
     this.testRunListeners = testRunListeners;
     this.grantAll = grantAll;
+    this.clearAppDataBeforeEachTest = clearAppDataBeforeEachTest;
   }
 
   private void printStream(InputStream stream, String tag) throws IOException {
@@ -160,10 +163,7 @@ public final class SpoonDeviceRunner {
     // Now install the main application and the instrumentation application.
     for (File otherApk : otherApks) {
       try {
-        String extraArgument = "";
-        if (grantAll && deviceDetails.getApiLevel() >= DeviceDetails.MARSHMALLOW_API_LEVEL) {
-          extraArgument = "-g";
-        }
+        String extraArgument = getGrantAllExtraArgument(deviceDetails);
         device.installPackage(otherApk.getAbsolutePath(), true, extraArgument);
       } catch (InstallException e) {
         logInfo("InstallException while install other apk on device [%s]", serial);
@@ -172,7 +172,8 @@ public final class SpoonDeviceRunner {
       }
     }
     try {
-      device.installPackage(testApk.getAbsolutePath(), true);
+      String extraArgument = getGrantAllExtraArgument(deviceDetails);
+      device.installPackage(testApk.getAbsolutePath(), true, extraArgument);
     } catch (InstallException e) {
       logInfo("InstallException while install test apk on device [%s]", serial);
       e.printStackTrace(System.out);
@@ -353,7 +354,9 @@ public final class SpoonDeviceRunner {
   private RemoteAndroidTestRunner createConfiguredRunner(String testPackage, String testRunner,
       IDevice device) throws Exception {
 
-    RemoteAndroidTestRunner runner = new RemoteAndroidTestRunner(testPackage, testRunner, device);
+    RemoteAndroidTestRunner runner = new SpoonAndroidTestRunner(
+            instrumentationInfo.getApplicationPackage(), testPackage, testRunner, device,
+            clearAppDataBeforeEachTest, debug);
     runner.setMaxTimeToOutputResponse(adbTimeout.toMillis(), TimeUnit.MILLISECONDS);
 
     for (Map.Entry<String, String> entry : instrumentationArgs.entrySet()) {
@@ -608,5 +611,17 @@ public final class SpoonDeviceRunner {
   private void cleanDirectoryOnDevice(String fullPath, IDevice device) throws Exception {
     CollectingOutputReceiver deleteDirOutputReceiver = new CollectingOutputReceiver();
     device.executeShellCommand("rm -rf " + fullPath, deleteDirOutputReceiver);
+  }
+
+  /**
+   * @param deviceDetails details for current device
+   * @return optional argument for grantAll permissions, or empty string if not required
+   */
+  private String getGrantAllExtraArgument(DeviceDetails deviceDetails) {
+    String extraArgument = "";
+    if (grantAll && deviceDetails.getApiLevel() >= DeviceDetails.MARSHMALLOW_API_LEVEL) {
+      extraArgument = "-g";
+    }
+    return extraArgument;
   }
 }

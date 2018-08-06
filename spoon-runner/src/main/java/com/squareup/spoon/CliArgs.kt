@@ -80,6 +80,9 @@ internal class CliArgs(parser: ArgParser) {
   val classLevelInstrumentation by parser.flagging("--class-level-instrumentation",
       help = "Run each test class in a different instrumentation instance")
 
+  val clearAppDataBeforeEachTest by parser.flagging("--clear-app-data",
+      help = "Runs 'adb pm clear app.package.name' to clear app data before each test.")
+
   private fun validateInstrumentationArgs() {
     val isTestRunPackageLimited = instrumentationArgs?.contains("package") ?: false
     val isTestRunClassLimited = instrumentationArgs?.contains("class") ?: false || (className != null || methodName != null)

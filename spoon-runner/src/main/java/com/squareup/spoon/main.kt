@@ -32,6 +32,7 @@ fun main(vararg args: String) {
     setCodeCoverage(cli.coverage)
     setSingleInstrumentationCall(cli.singleInstrumentationCall)
     setClassLevelInstrumentation(cli.classLevelInstrumentation)
+    setClearAppDataBeforeEachTest(cli.clearAppDataBeforeEachTest)
   }.build()
 
   if (!runner.run() && !cli.alwaysZero) {
