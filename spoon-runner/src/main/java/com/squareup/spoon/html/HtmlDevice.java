@@ -28,9 +28,10 @@ final class HtmlDevice {
 
     int testsRun = result.getTestResults().size();
     int testsFailed = testsRun - testsPassed;
-    String totalTestsRun = testsRun + " test" + (testsRun != 1 ? "s" : "");
+    String totalTestsRun = "😎 " + testsRun + " test" + (testsRun != 1 ? "s" : "");
     DeviceDetails details = result.getDeviceDetails();
-    String title = (details != null) ? details.getName() : serial;
+    String title = (details != null) ? details.getName().replace("_", " ") : serial;
+    title = "📱" + title;
 
     List<HtmlUtils.ExceptionInfo> exceptions = result.getExceptions()
         .stream()
@@ -40,12 +41,15 @@ final class HtmlDevice {
     StringBuilder subtitle1 = new StringBuilder();
     subtitle1.append(totalTestsRun).append(" run");
     if (testsPassed > 0) {
-      subtitle1.append(" with ")
-          .append(testsPassed)
-          .append(" passing and ")
-          .append(testsFailed)
-          .append(" failing in ")
-          .append(HtmlUtils.humanReadableDuration(result.getDuration()));
+      subtitle1.append("\n🟩 ")
+              .append(testsPassed)
+              .append(" Passing")
+              .append("  ")
+              .append("🟥 ")
+              .append(testsFailed)
+              .append(" Failing")
+              .append("\n⏱ ")
+              .append(HtmlUtils.humanReadableDuration(result.getDuration()));
     }
     subtitle1.append(" at ")
         .append(HtmlUtils.dateToString(result.getStarted()));

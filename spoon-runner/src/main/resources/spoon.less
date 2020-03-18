@@ -20,18 +20,26 @@ body {
 	padding-bottom: 50px;
 }
 
+h2{
+  margin-bottom: 20px;
+  font-weight: 500;
+  font-size: 25px;
+  color: 	#393b3e;
+}
+
 .hero-unit {
-  background-image: url('ceiling_android.png');
+  // background-image: url('ceiling_android.png');
   background-repeat: no-repeat;
   background-position: top right;
   padding: 15px 30px;
 
   h1 {
-    margin-bottom: 5px;
-    font-weight: 200;
+    margin-bottom: 20px;
+    font-weight: 500;
   }
   p {
     margin: 0;
+    font-weight: 400;
   }
 }
 
@@ -55,8 +63,16 @@ body {
   }
 }
 
+.imageTitle{
+  word-wrap: break-word;
+  color: #5f6368;
+  font-weight: 400;
+  font-size: 20px;
+  text-align: center;
+}
+
 .test-result {
-  font-weight: 200;
+  font-weight: 500;
 
   small {
     font-weight: 200;
@@ -67,11 +83,11 @@ body {
   }
 
   &.pass {
-    border-bottom: 2px solid #89c989;
+    border-bottom: 2px solid #33a853;
   }
   &.fail,
   &.error {
-    border-bottom: 2px solid #c98989;
+    border-bottom: 2px solid #ea4335;
   }
   &.ignored,
   &.assumption-violation {
@@ -145,18 +161,18 @@ body {
     }
 
     &.pass {
-      background-color: #b9e9b9;
+      background-color: #33a853;
     }
     &.pass:hover {
-      background-color: #99c999;
+      background-color: #288642;
     }
     &.fail,
     &.error {
-      background-color: #e9b9b9;
+      background-color: #ea4335;
     }
     &.fail:hover,
     &.error:hover {
-      background-color: #c99999;
+      background-color: #bb352a;
     }
     &.error {
       background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
@@ -200,5 +216,14 @@ pre.error {
   }
   td {
     white-space: nowrap;
+  }
+}
+
+.alert-danger {
+  &.alert-error {
+    color: #ea4335;
+    background-color: #fad9d6;
+    border-color: transparent;
+    text-shadow: none;
   }
 }

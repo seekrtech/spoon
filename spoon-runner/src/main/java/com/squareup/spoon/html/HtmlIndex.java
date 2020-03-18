@@ -40,19 +40,22 @@ final class HtmlIndex {
     int deviceCount = summary.getResults().size();
     IRemoteAndroidTestRunner.TestSize testSize = summary.getTestSize();
     String started = HtmlUtils.dateToString(summary.getStarted());
-    String totalTestsRun = testsRun + (testSize != null ? " " + testSize.name().toLowerCase() : "")
-        + " test" + (testsRun != 1 ? "s" : "");
-    String totalDevices = deviceCount + " device" + (deviceCount != 1 ? "s" : "");
+    String totalTestsRun = "😎 " + testsRun + (testSize != null ? " " + testSize.name().toLowerCase() : "")
+            + " test" + (testsRun != 1 ? "s" : "");
+    String totalDevices = " " + deviceCount + " device" + (deviceCount != 1 ? "s" : "");
 
     StringBuilder subtitle = new StringBuilder();
     subtitle.append(totalTestsRun).append(" run across ").append(totalDevices);
     if (testsRun > 0) {
-      subtitle.append(" with ")
-          .append(totalSuccess)
-          .append(" passing and ")
-          .append(totalFailure)
-          .append(" failing in ")
-          .append(HtmlUtils.humanReadableDuration(summary.getDuration()));
+      subtitle.append("\n🟩 ")
+              .append(totalSuccess)
+              .append(" Passing")
+              .append("  ")
+              .append("🟥 ")
+              .append(totalFailure)
+              .append(" Failing")
+              .append("\n⏱ ")
+              .append(HtmlUtils.humanReadableDuration(summary.getDuration()));
     }
     subtitle.append(" at ").append(started);
 
