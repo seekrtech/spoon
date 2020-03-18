@@ -16,7 +16,10 @@
 <div class="container">
     <div class="hero-unit">
         <h1>{{title}}</h1>
-        <p>{{subtitle1}}</p>
+        <p>{{subtitle1TotalTestRunAndDevice}} <br>
+            🟩 {{subtitle1TestPass}} Passing &nbsp;&nbsp; 🟥 {{subtitle1TestFail}} Failing <br>
+            ⏱ {{subtitle1Duration}}
+        </p>
         {{#subtitle2}}<p>{{subtitle2}}</p>{{/subtitle2}}
     </div>
     {{#hasExceptions}}
