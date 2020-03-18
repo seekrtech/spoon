@@ -41,14 +41,14 @@ final class HtmlDevice {
     StringBuilder subtitle1 = new StringBuilder();
     subtitle1.append(totalTestsRun).append(" run");
     if (testsPassed > 0) {
-      subtitle1.append("\n🟩 ")
+      subtitle1.append("/<br/>🟩 ")
               .append(testsPassed)
               .append(" Passing")
               .append("  ")
               .append("🟥 ")
               .append(testsFailed)
               .append(" Failing")
-              .append("\n⏱ ")
+              .append("/<br/>⏱ ")
               .append(HtmlUtils.humanReadableDuration(result.getDuration()));
     }
     subtitle1.append(" at ")
@@ -81,7 +81,7 @@ final class HtmlDevice {
   static final class TestResult implements Comparable<TestResult> {
     static TestResult from(String serial, DeviceTest test, DeviceTestResult result, File output) {
       String className = test.getClassName();
-      String methodName = test.getMethodName();
+      String methodName = test.getMethodName().replace("_" ," ");
       String classSimpleName = HtmlUtils.getClassSimpleName(className);
       String testId = HtmlUtils.testClassAndMethodToId(className, methodName);
       String status = HtmlUtils.getStatusCssClass(result);

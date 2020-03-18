@@ -47,14 +47,14 @@ final class HtmlIndex {
     StringBuilder subtitle = new StringBuilder();
     subtitle.append(totalTestsRun).append(" run across ").append(totalDevices);
     if (testsRun > 0) {
-      subtitle.append("\n🟩 ")
+      subtitle.append("<br>🟩 ")
               .append(totalSuccess)
               .append(" Passing")
               .append("  ")
               .append("🟥 ")
               .append(totalFailure)
               .append(" Failing")
-              .append("\n⏱ ")
+              .append("/<br/>⏱ ")
               .append(HtmlUtils.humanReadableDuration(summary.getDuration()));
     }
     subtitle.append(" at ").append(started);
