@@ -33,7 +33,7 @@ final class HtmlDevice {
 
         DeviceDetails details = result.getDeviceDetails();
         String title = (details != null) ? details.getName().replace("_", " ") : serial;
-        title = "📱" + title ;
+        title = "📱" + title;
 
         String totalTestsRun = "😎 " + testsRun + " test" + (testsRun != 1 ? "s" : "") + " run";
 
@@ -49,7 +49,7 @@ final class HtmlDevice {
 
         String subtitle2 = HtmlUtils.deviceDetailsToString(details);
 
-        return new HtmlDevice(serial, title, subtitle2, totalTestsRun, subtitle1TestPass, subtitle1TestFail,subtitle1Duration, testResults, exceptions);
+        return new HtmlDevice(serial, title, subtitle2, totalTestsRun, subtitle1TestPass, subtitle1TestFail, subtitle1Duration, testResults, exceptions);
     }
 
     public final String serial;
@@ -80,7 +80,8 @@ final class HtmlDevice {
     static final class TestResult implements Comparable<TestResult> {
         static TestResult from(String serial, DeviceTest test, DeviceTestResult result, File output) {
             String className = test.getClassName();
-            String methodName = test.getMethodName().replace("_", " ");
+            String methodName = test.getMethodName();
+            String prettyMethodName = methodName.replace("_", " ");
             String classSimpleName = HtmlUtils.getClassSimpleName(className);
             String testId = HtmlUtils.testClassAndMethodToId(className, methodName);
             String status = HtmlUtils.getStatusCssClass(result);
@@ -94,7 +95,7 @@ final class HtmlDevice {
                     .collect(toList());
             String animatedGif = HtmlUtils.createRelativeUri(result.getAnimatedGif(), output);
             HtmlUtils.ExceptionInfo exception = HtmlUtils.processStackTrace(result.getException());
-            return new TestResult(serial, className, methodName, classSimpleName, methodName,
+            return new TestResult(serial, className, methodName, classSimpleName, prettyMethodName,
                     testId, status, screenshots, animatedGif, exception, files);
         }
 
