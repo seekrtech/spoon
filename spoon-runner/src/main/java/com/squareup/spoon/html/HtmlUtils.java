@@ -140,7 +140,7 @@ final class HtmlUtils {
         String caption = screenshot.getName();
         int firstUnderLineIndex = caption.indexOf('_');
         int fileExtensionNameIndex = caption.indexOf(".png");
-        caption = caption.substring(firstUnderLineIndex + 1, fileExtensionNameIndex - 1);
+        caption = caption.substring(firstUnderLineIndex + 1, fileExtensionNameIndex);
         caption = caption.replace("_", " ");
         return new Screenshot(relativePath, caption);
     }
